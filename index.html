@@ -21,10 +21,10 @@
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
       /* Paleta de cores */
-      --clr-primary: #2563eb;       /* Acento azul */
+      --clr-primary: #2563eb;        /* Acento azul */
       --clr-primary-hover: #1e40af; /* Hover btn */
-      --clr-bg-1: #0f172a;          /* Fundo principal (quase preto) */
-      --clr-bg-2: #1e293b;          /* Fundo secundário */
+      --clr-bg-1: #0f172a00;          /* Fundo principal (quase preto) */
+      --clr-bg-2: #1e293b00;          /* Fundo secundário */
       --clr-surface: #334155;      /* Cartões / painéis */
       --clr-text: #f1f5f9;          /* Texto principal */
       --clr-text-muted: #94a3b8;    /* Texto secundário */
@@ -37,6 +37,8 @@
       background: var(--clr-bg-1);
       color: var(--clr-text);
       scroll-behavior: smooth;
+      /* Adiciona um leve contorno preto ao texto principal */
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
     }
 
     /* =========================================================
@@ -107,7 +109,8 @@
       justify-content: center;
       text-align: center;
       padding: 6rem 2rem 4rem;
-      background: linear-gradient(160deg, var(--clr-bg-1) 0%, var(--clr-bg-2) 60%), url('https://images.unsplash.com/photo-1516912481808-3406841bd33c?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+      /* Updated background image */
+      background: linear-gradient(160deg, var(--clr-bg-1) 0%, var(--clr-bg-2) 60%), url('ChatGPT Image 10_07_2025, 16_12_03.png') center/cover no-repeat;
       background-blend-mode: overlay;
     }
     .hero h1 {

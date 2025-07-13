@@ -1,3 +1,17 @@
+const firebaseConfig = {
+  apiKey: "AIzaSyCTlpyWixrespwJRK61G4iuxMqE2Ds-Qsg",
+  authDomain: "ruas-gurinhem.firebaseapp.com",
+  databaseURL: "https://ruas-gurinhem-default-rtdb.firebaseio.com",
+  projectId: "ruas-gurinhem",
+  storageBucket: "ruas-gurinhem.appspot.com",
+  messagingSenderId: "141299087958",
+  appId: "1:141299087958:web:77a466634da1ecd00fd9f7",
+  measurementId: "G-Q8ZYR49E8E"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
 function cadastrar() {
   const nome = document.getElementById("nome").value;
   const email = document.getElementById("email").value;
@@ -28,18 +42,15 @@ function login() {
       const docRef = db.collection("users").doc(user.uid);
       docRef.get().then(doc => {
         if (!doc.exists) {
-          // cria perfil padrão se não existir
           docRef.set({
             email: user.email,
             nome: user.email.split("@")[0],
             role: "user"
           }).then(() => {
             alert("Perfil criado automaticamente. Login bem-sucedido como USUÁRIO.");
-            // window.location.href = "dashboard.html"; // se quiser redirecionar para outra página
           });
         } else {
           const role = doc.data().role;
-
           if (role === "master") {
             alert("Login bem-sucedido como MASTER.");
             window.location.href = "admin.html";
@@ -48,15 +59,12 @@ function login() {
             window.location.href = "admin.html";
           } else {
             alert("Login bem-sucedido como USUÁRIO.");
-             window.location.href = "https://orbisgeo.github.io/sigweb_gurinhem/";
+            window.location.href = "https://orbisgeo.github.io/sigweb_gurinhem/";
           }
         }
       });
-
     })
-    .catch(error => {
-      alert("Erro ao fazer login: " + error.message);
-    });
+    .catch(error => alert("Erro ao fazer login: " + error.message));
 }
 
 function logout() {
@@ -73,12 +81,8 @@ function redefinirSenha() {
   }
 
   auth.sendPasswordResetEmail(email)
-    .then(() => {
-      alert("E-mail de redefinição enviado!");
-    })
-    .catch(error => {
-      alert("Erro ao enviar e-mail: " + error.message);
-    });
+    .then(() => alert("E-mail de redefinição enviado!"))
+    .catch(error => alert("Erro ao enviar e-mail: " + error.message));
 }
 
 function loadUsuarios() {

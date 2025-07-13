@@ -58,7 +58,7 @@
       letter-spacing:.5px;
       color:var(--clr-primary);
     }
-    .nav-links{display:flex;gap:1.5rem;}
+    .nav-links{display:flex;gap:1.5rem;align-items:center;}
     .nav-links a{
       font-weight:500;
       text-decoration:none;
@@ -66,6 +66,56 @@
       transition:color .2s ease;
     }
     .nav-links a:hover{color:var(--clr-primary);}
+    .login-dropdown {
+      position: relative;
+    }
+    .login-dropdown button {
+      background: var(--clr-primary);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .login-dropdown-content {
+      display: none;
+      position: absolute;
+      top: 120%;
+      right: 0;
+      background: #1e293b;
+      padding: 1rem;
+      border-radius: 6px;
+      border: 1px solid var(--clr-border);
+      box-shadow: 0 4px 8px rgba(0,0,0,.4);
+      z-index: 999;
+    }
+    .login-dropdown-content input,
+    .login-dropdown-content button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: none;
+    }
+    .login-dropdown-content input {
+      background: #334155;
+      color: #fff;
+    }
+    .login-dropdown-content button {
+      background: var(--clr-primary);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .login-dropdown-content button.secondary {
+      background: none;
+      color: #ccc;
+      text-decoration: underline;
+    }
+    .login-dropdown:hover .login-dropdown-content {
+      display: block;
+    }
     .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;}
     .hamburger span{width:24px;height:3px;background:var(--clr-text);border-radius:2px;transition:transform .3s ease;}
     .hero{
@@ -123,22 +173,21 @@
         <a href="https://orbisgeo.github.io/tewetland/" target="_blank" rel="noopener">Tewetland</a>
         <a href="#servicos">Soluções</a>
         <a href="#contato">Contato</a>
+        <div class="login-dropdown">
+          <button>Entrar</button>
+          <div class="login-dropdown-content">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="senha" placeholder="Senha" required>
+            <button onclick="login()">Entrar</button>
+            <button class="secondary" onclick="redefinirSenha()">Esqueci a senha</button>
+          </div>
+        </div>
       </nav>
       <div class="hamburger" id="hamburgerBtn" aria-label="Abrir menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </div>
     </div>
   </header>
-
-  <!-- LOGIN COMPACTO -->
-  <section style="margin-top:150px;background:#1e293b;padding:1.5rem 2rem;border-bottom:1px solid #334155;">
-    <form onsubmit="login(); return false;" style="max-width:500px;margin:0 auto;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;justify-content:center;">
-      <input type="email" id="email" placeholder="Email" required style="padding:.5rem 1rem;border-radius:6px;border:none;flex:1;min-width:150px;">
-      <input type="password" id="senha" placeholder="Senha" required style="padding:.5rem 1rem;border-radius:6px;border:none;flex:1;min-width:150px;">
-      <button type="submit" style="padding:.5rem 1.5rem;border:none;border-radius:6px;background:#2563eb;color:#fff;font-weight:bold;cursor:pointer;">Entrar</button>
-      <button type="button" onclick="redefinirSenha()" style="padding:.5rem 1rem;border:none;background:none;color:#ccc;text-decoration:underline;cursor:pointer;">Esqueci a senha</button>
-    </form>
-  </section>
 
   <section class="hero" id="inicio">
     <h1>Integramos tecnologia & meio ambiente para cidades inteligentes.</h1>
@@ -201,6 +250,7 @@
         .then(() => alert("Login realizado com sucesso!"))
         .catch(err => alert("Erro: " + err.message));
     }
+
     function redefinirSenha() {
       const email = document.getElementById("email").value;
       if (!email) return alert("Digite o e-mail para redefinir a senha.");
@@ -208,6 +258,7 @@
         .then(() => alert("Email de redefinição enviado."))
         .catch(err => alert("Erro: " + err.message));
     }
+
     document.getElementById('hamburgerBtn').addEventListener('click', () => {
       const navLinks = document.getElementById('navLinks');
       const isOpen = navLinks.classList.toggle('open');

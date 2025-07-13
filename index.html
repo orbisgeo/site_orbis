@@ -115,9 +115,6 @@
       color: #ccc;
       text-decoration: underline;
     }
-    .login-dropdown:hover .login-dropdown-content {
-      display: block;
-    }
     .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;}
     .hamburger span{width:24px;height:3px;background:var(--clr-text);border-radius:2px;transition:transform .3s ease;}
     .hero{
@@ -176,8 +173,8 @@
         <a href="#servicos">Soluções</a>
         <a href="#contato">Contato</a>
         <div class="login-dropdown">
-          <button>Entrar</button>
-          <div class="login-dropdown-content">
+          <button onclick="toggleLogin()">Entrar</button>
+          <div class="login-dropdown-content" id="loginPanel">
             <input type="email" placeholder="E-mail" />
             <input type="password" placeholder="Senha" />
             <button>Login</button>
@@ -232,6 +229,18 @@
     hamburger.addEventListener('click', () => {
       const isOpen = navLinks.classList.toggle('open');
       hamburger.setAttribute('aria-expanded', isOpen);
+    });
+
+    function toggleLogin() {
+      const panel = document.getElementById('loginPanel');
+      panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+    }
+    document.addEventListener('click', function(event) {
+      const loginPanel = document.getElementById('loginPanel');
+      const loginBtn = document.querySelector('.login-dropdown button');
+      if (!loginPanel.contains(event.target) && event.target !== loginBtn) {
+        loginPanel.style.display = 'none';
+      }
     });
   </script>
 </body>

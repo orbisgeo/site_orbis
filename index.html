@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Orbis Geotecnologias</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -269,8 +270,8 @@
       </div>
       <nav class="nav-links" id="navLinks">
         <a href="#inicio">Início</a>
-        <a href="https://orbisgeo.github.io/OrbisMap/" target="_blank" rel="noopener">Geotecnologias</a>
-        <a href="https://orbisgeo.github.io/tewetland/" target="_blank" rel="noopener">Tewetland</a>
+        <a href="https://orbisgeo.github.io/OrbisMap/" target="_blank">Geotecnologias</a>
+        <a href="https://orbisgeo.github.io/tewetland/" target="_blank">Tewetland</a>
         <a href="#servicos">Soluções</a>
         <a href="#contato">Contato</a>
         <div class="login-dropdown">
@@ -335,11 +336,22 @@
     Todos os direitos reservados © 2025
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" defer></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      sendPasswordResetEmail,
+      setPersistence,
+      browserLocalPersistence
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCTlpyWixrespwJRK61G4iuxMqE2Ds-Qsg",
@@ -390,8 +402,15 @@
     window.login = function () {
       const email = document.getElementById("loginEmail").value;
       const senha = document.getElementById("loginPassword").value;
+      const loginButton = document.querySelector("#loginPanel button:not(.secondary)");
 
-      signInWithEmailAndPassword(auth, email, senha)
+      loginButton.disabled = true;
+      loginButton.textContent = "Entrando...";
+
+      setPersistence(auth, browserLocalPersistence)
+        .then(() => {
+          return signInWithEmailAndPassword(auth, email, senha);
+        })
         .then(userCredential => {
           const user = userCredential.user;
           const docRef = doc(db, "users", user.uid);
@@ -417,7 +436,11 @@
             }
           });
         })
-        .catch(error => alert("Erro ao fazer login: " + error.message));
+        .catch(error => {
+          alert("Erro ao fazer login: " + error.message);
+          loginButton.disabled = false;
+          loginButton.textContent = "Entrar";
+        });
     };
 
     window.redefinirSenha = function () {

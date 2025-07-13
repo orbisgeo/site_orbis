@@ -58,7 +58,7 @@
       letter-spacing:.5px;
       color:var(--clr-primary);
     }
-    .nav-links{display:flex;gap:1.5rem;align-items:center;}
+    .nav-links{display:flex;gap:1.5rem;align-items:center;position:relative;}
     .nav-links a{
       font-weight:500;
       text-decoration:none;
@@ -73,9 +73,10 @@
       background: var(--clr-primary);
       color: #fff;
       border: none;
-      padding: 0.5rem 1rem;
+      padding: 0.4rem 0.8rem;
       border-radius: 6px;
       cursor: pointer;
+      font-size: 0.9rem;
     }
     .login-dropdown-content {
       display: none;
@@ -84,10 +85,11 @@
       right: 0;
       background: #1e293b;
       padding: 1rem;
-      border-radius: 6px;
+      border-radius: 8px;
       border: 1px solid var(--clr-border);
-      box-shadow: 0 4px 8px rgba(0,0,0,.4);
+      box-shadow: 0 6px 12px rgba(0,0,0,.5);
       z-index: 999;
+      width: 280px;
     }
     .login-dropdown-content input,
     .login-dropdown-content button {
@@ -176,10 +178,10 @@
         <div class="login-dropdown">
           <button>Entrar</button>
           <div class="login-dropdown-content">
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="senha" placeholder="Senha" required>
-            <button onclick="login()">Entrar</button>
-            <button class="secondary" onclick="redefinirSenha()">Esqueci a senha</button>
+            <input type="email" placeholder="E-mail" />
+            <input type="password" placeholder="Senha" />
+            <button>Login</button>
+            <button class="secondary">Esqueci a senha</button>
           </div>
         </div>
       </nav>
@@ -188,13 +190,11 @@
       </div>
     </div>
   </header>
-
   <section class="hero" id="inicio">
     <h1>Integramos tecnologia & meio ambiente para cidades inteligentes.</h1>
     <p>Consultoria ambiental, saneamento ecológico e soluções geoespaciais sob medida para o setor público e privado.</p>
     <a href="#servicos" class="btn-primary">Conheça nossas soluções</a>
   </section>
-
   <section class="solutions" id="servicos">
     <h2>Soluções que geram impacto real</h2>
     <div class="cards">
@@ -220,49 +220,18 @@
       </div>
     </div>
   </section>
-
   <footer id="contato">
     Orbis Geotecnologias e Consultoria Ambiental LTDA<br>
     CNPJ: 48.886.336/0001-20 · TELEFONE: (83) 99629-7883 · E-MAIL: orbis.ea@gmail.com<br>
     Todos os direitos reservados © 2025
   </footer>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" defer></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCTlpyWixrespwJRK61G4iuxMqE2Ds-Qsg",
-      authDomain: "ruas-gurinhem.firebaseapp.com",
-      databaseURL: "https://ruas-gurinhem-default-rtdb.firebaseio.com",
-      projectId: "ruas-gurinhem",
-      storageBucket: "ruas-gurinhem.appspot.com",
-      messagingSenderId: "141299087958",
-      appId: "1:141299087958:web:77a466634da1ecd00fd9f7",
-      measurementId: "G-Q8ZYR49E8E"
-    };
-    firebase.initializeApp(firebaseConfig);
-
-    function login() {
-      const email = document.getElementById("email").value;
-      const senha = document.getElementById("senha").value;
-      firebase.auth().signInWithEmailAndPassword(email, senha)
-        .then(() => alert("Login realizado com sucesso!"))
-        .catch(err => alert("Erro: " + err.message));
-    }
-
-    function redefinirSenha() {
-      const email = document.getElementById("email").value;
-      if (!email) return alert("Digite o e-mail para redefinir a senha.");
-      firebase.auth().sendPasswordResetEmail(email)
-        .then(() => alert("Email de redefinição enviado."))
-        .catch(err => alert("Erro: " + err.message));
-    }
-
-    document.getElementById('hamburgerBtn').addEventListener('click', () => {
-      const navLinks = document.getElementById('navLinks');
+    const hamburger = document.getElementById('hamburgerBtn');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
       const isOpen = navLinks.classList.toggle('open');
-      hamburgerBtn.setAttribute('aria-expanded', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
     });
   </script>
 </body>
